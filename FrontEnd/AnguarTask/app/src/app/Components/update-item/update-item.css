@@ -1,4 +1,4 @@
-.signin-page {
+.update-page {
     min-height: 80vh;
     display: flex;
     justify-content: center;
@@ -7,16 +7,16 @@
     background: #f5f7fa;
 }
 
-.signin-card {
+.update-card {
     width: 100%;
-    max-width: 420px;
+    max-width: 550px;
     background: white;
     padding: 35px;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.signin-card h2 {
+.update-card h2 {
     margin: 0;
     text-align: center;
     font-size: 28px;
@@ -26,12 +26,11 @@
 .subtitle {
     text-align: center;
     color: #777;
-    margin-top: 8px;
     margin-bottom: 30px;
 }
 
 .form-group {
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
@@ -44,7 +43,7 @@
 .form-group input {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px 14px;
+    padding: 11px 13px;
     border: 1px solid #ccc;
     border-radius: 7px;
     font-size: 15px;
@@ -55,6 +54,11 @@
 .form-group input:focus {
     border-color: #4f46e5;
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.form-group input:read-only {
+    background: #f1f1f1;
+    cursor: not-allowed;
 }
 
 .form-group input.invalid {
@@ -68,42 +72,54 @@
     font-size: 13px;
 }
 
-.server-error {
-    padding: 10px 12px;
-    margin-bottom: 20px;
-    border-radius: 7px;
-    background: #f8d7da;
-    color: #842029;
-    border: 1px solid #f5c2c7;
-    font-size: 14px;
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
 }
 
-.signin-btn {
-    width: 100%;
+.form-actions button {
+    flex: 1;
     padding: 12px;
     border: none;
     border-radius: 7px;
-    background: #4f46e5;
-    color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.signin-btn:hover:not(:disabled) {
+.update-btn {
+    background: #4f46e5;
+    color: white;
+}
+
+.update-btn:hover:not(:disabled) {
     background: #4338ca;
 }
 
-.signin-btn:disabled {
+.update-btn:disabled {
     background: #aaa;
     cursor: not-allowed;
 }
 
-@media (max-width: 500px) {
+.cancel-btn {
+    background: #e5e7eb;
+    color: #333;
+}
 
-    .signin-card {
+.cancel-btn:hover {
+    background: #d1d5db;
+}
+
+@media (max-width: 600px) {
+
+    .update-card {
         padding: 25px 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
     }
 
 }

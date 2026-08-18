@@ -13,23 +13,36 @@ export class OrderService {
   
   constructor(private httpClient:HttpClient){}
   
-  CreateOrder(order:Order):Observable<OrderDto>{
-    return this.httpClient.post<OrderDto>(`https://localhost:7273/api/orders`,order)
+  CreateOrder():Observable<OrderDto>{
+    return this.httpClient.post<OrderDto>(`https://localhost:7273/api/orders`,{})
   }
   GetAllOrders():Observable<OrderDto[]>{
     return this.httpClient.get<OrderDto[]>(`https://localhost:7273/api/orders`)
   }
-  AddOrderItemToOrder(orderItem:OrderItem,itemId:number,quantity:number):Observable<OrderItem>{
-    return this.httpClient.post<OrderItem>(`https://localhost:7273/api/orders/orderItems/${itemId}?quantity=${quantity}`,orderItem)
+  AddOrderItemToOrder(orderItemDto:OrderItemDto):Observable<OrderItemDto>{
+    return this.httpClient.post<OrderItemDto>( `https://localhost:7273/api/orders/orderItems`,orderItemDto)
   }
   DeleteOrderItemFromOrder(itemId:number):Observable<void>{
-    return this.httpClient.delete<void>(`https://localhost:7273/api/orders/${itemId}`)
+    return this.httpClient.delete<void>(`https://localhost:7273/api/orders/orderItems/${itemId}`)
   }
   GetOrderItemsById(orderId:number):Observable<OrderItemDto[]>{
     return this.httpClient.get<OrderItemDto[]>(`https://localhost:7273/api/orders/orderItems/${orderId}`)
   }
   CancelOrder(order:Order):Observable<void>{
     return this.httpClient.put<void>(`https://localhost:7273/api/orders/cancel`,order)
+  }
+  GetCurrentOrder():Observable<Order>{
+    return this.httpClient.get<Order>(`https://localhost:7273/api/orders/current`)
+
+  }
+  GetOrderItems():Observable<OrderItem[]>{
+    return this.httpClient.get<OrderItem[]>(`https://localhost:7273/api/orders/orderItems`)
+  }
+  IncreaseOrderItem(OrderItemDto:OrderItemDto):Observable<OrderItemDto>{
+    return this.httpClient.put<OrderItemDto>(`https://localhost:7273/api/orders/orderItems/Increase`,OrderItemDto)
+  }
+  DecreaseOrderItem(OrderItemDto:OrderItemDto):Observable<OrderItemDto>{
+    return this.httpClient.put<OrderItemDto>(`https://localhost:7273/api/orders/orderItems/Decrease`,OrderItemDto)
   }
 
   

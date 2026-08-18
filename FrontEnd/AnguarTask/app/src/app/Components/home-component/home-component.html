@@ -1,19 +1,53 @@
 <h2>products</h2>
 <div class="btns">
+    <button class="details" (click)="Signout()" > sign out</button>
     @if(currentUser()?.role=="Customer"){ 
-        <button class="details"  >Apply Order</button>
+        <button class="details" (click)="ApplyOrder()" >Apply Order</button>
+        <button class="details" (click)="GetOrderDetails()">Get Order Details</button>
     }
     @if(currentUser()?.role=="Admin"){
         <button class="details" (click)="GetAllOrders()" >All Orders</button>
+        <button class="details" (click)="GetAllOrders()" >Add Item</button>
+        <button class="details" (click)="GetAllOrders()" >Add Category</button>
     }
 </div>
-<div class="products">
-    @for(item of items();track $index;let i=$index)
-    {
-         <div class="product">
-            <h2>{{item.name}}</h2>
-            <p>{{item.price}}</p> 
-            <button class="details" (click)="ViewDetails(item.id)">view details</button>
-        </div>
+<ul>
+    <select
+    [ngModel]="selectedCategory()"
+    (ngModelChange)="GetItemsByCategory($event)"
+>
+    <option [ngValue]="null">Select category</option>
+
+    @for (category of categories(); track category.id) {
+        <option [ngValue]="category.id">
+            {{ category.name }}
+        </option>
     }
+</select>
+</ul>
+<input type="search" [(ngModel)]="searchValue" /><br>
+<button (click)="SearchAboutItem()">search</button>
+<div class="products">
+            @for(item of items();track $index;let i=$index)
+            {
+                 <div class="product">
+                    <h2>{{item.name}}</h2>
+                    <p>{{item.price}}</p> 
+                    <p>{{item.stockQuantity}}</p> 
+                    <button class="details" (click)="ViewDetails(item.id)">view details</button>
+                    @if (currentUser()?.role=="Admin") {
+                        <button class="details" (click)="UpdateItem(item.id)">update Item</button>
+                        <button class="details" (click)="DeleteItem(item.id)">Delete item</button>
+                    }
+                    @if (currentUser()?.role=='Customer') {
+                            <button class="details" (click)="AddToCart(item)">Add To Cart</button>
+                    }
+                </div>
+            }
+            @empty {
+                @if (selectedCategory()==null) {
+                <em>Not found product with this category</em>
+                }
+                <em>Not found product</em>
+            }
 </div>

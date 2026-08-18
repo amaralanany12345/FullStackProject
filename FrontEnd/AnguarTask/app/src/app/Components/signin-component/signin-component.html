@@ -1,16 +1,96 @@
-<h2>Sign In</h2>
-<form [formGroup]="signInForm" (ngSubmit)="signIn()">
-    <section>
-        <div class="">
-            <label>Email</label><br/>
-            <input placeholder="Email" type="email" formControlName="email" name="email" /><br/>
-            <label>Password</label><br/>
-            <input placeholder="password" type="password" formControlName="password" name="password" /><br/>
-            <button [disabled]="signInForm.invalid" type="submit">Sign In</button>
-        </div>
-    </section>
-</form>
+<div class="signin-page">
 
-<!-- @if(error){
-    <h2>{{error.message}}</h2>
-} -->
+    <div class="signin-card">
+
+        <h2>Sign In</h2>
+        <p class="subtitle">Welcome back! Please sign in to continue.</p>
+
+        <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+
+            <!-- Email -->
+            <div class="form-group">
+
+                <label for="email">Email</label>
+
+                <input
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    placeholder="Enter your email"
+                    [class.invalid]="
+                        signInForm.controls.email.invalid &&
+                        signInForm.controls.email.touched
+                    "
+                />
+
+                @if (
+                    signInForm.controls.email.hasError('required') &&
+                    signInForm.controls.email.touched
+                ) {
+                    <span class="error">
+                        Please enter your email.
+                    </span>
+                }
+
+                @if (
+                    signInForm.controls.email.hasError('email') &&
+                    signInForm.controls.email.touched
+                ) {
+                    <span class="error">
+                        Please enter a valid email.
+                    </span>
+                }
+
+            </div>
+
+
+            <!-- Password -->
+            <div class="form-group">
+
+                <label for="password">Password</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    formControlName="password"
+                    placeholder="Enter your password"
+                    [class.invalid]="
+                        signInForm.controls.password.invalid &&
+                        signInForm.controls.password.touched
+                    "
+                />
+
+                @if (
+                    signInForm.controls.password.hasError('required') &&
+                    signInForm.controls.password.touched
+                ) {
+                    <span class="error">
+                        Please enter your password.
+                    </span>
+                }
+
+            </div>
+
+
+            <!-- API Error -->
+            @if (error()) {
+                <div class="server-error">
+                    {{ error() }}
+                </div>
+            }
+
+
+            <!-- Submit -->
+            <button
+                class="signin-btn"
+                [disabled]="signInForm.invalid"
+                type="submit"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

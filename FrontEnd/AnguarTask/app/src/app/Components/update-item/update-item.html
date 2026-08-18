@@ -1,0 +1,120 @@
+<div class="update-page">
+    <div class="update-card">
+        <h2>Update Item</h2>
+        <p class="subtitle">Update the item information below</p>
+        <form [formGroup]="updateItem" (ngSubmit)="UpdateItem()">
+            <div class="form-group">
+                <label for="id">Item ID</label>
+                <input id="id" type="number" formControlName="id" placeholder="Item ID" readonly />
+            </div>
+            <div class="form-group">
+
+                <label for="name">Name</label>
+
+                <input
+                    id="name"
+                    type="text"
+                    formControlName="name"
+                    placeholder="Enter item name"
+                    [class.invalid]="
+                        updateItem.controls.name.invalid &&
+                        updateItem.controls.name.touched
+                    "
+                />
+
+                @if (
+                    updateItem.controls.name.hasError('required') &&
+                    updateItem.controls.name.touched
+                ) {
+                    <span class="error">
+                        Please enter the item name.
+                    </span>
+                }
+
+                @if (
+                    updateItem.controls.name.hasError('minlength') &&
+                    updateItem.controls.name.touched
+                ) {
+                    <span class="error">
+                        Name must contain at least 3 characters.
+                    </span>
+                }
+
+            </div>
+
+
+            <!-- Price -->
+            <div class="form-group">
+
+                <label for="price">Price</label>
+
+                <input
+                    id="price"
+                    type="number"
+                    formControlName="price"
+                    placeholder="Enter price"
+                />
+
+            </div>
+
+
+            <!-- Stock Quantity -->
+            <div class="form-group">
+
+                <label for="stockQuantity">
+                    Stock Quantity
+                </label>
+
+                <input
+                    id="stockQuantity"
+                    type="number"
+                    formControlName="stockQuantity"
+                    placeholder="Enter stock quantity"
+                />
+
+            </div>
+
+
+            <!-- Category -->
+            <div class="form-group">
+
+                <label for="categoryName">
+                    Category
+                </label>
+
+                <input
+                    id="categoryName"
+                    type="text"
+                    formControlName="categoryName"
+                    placeholder="Enter category name"
+                />
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="update-btn"
+                    [disabled]="updateItem.invalid"
+                >
+                    Update Item
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    routerLink="/home"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { LoginDto } from '../../Dtos/login-dto';
-import { FormBuilder,ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder,ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../Services/user-service';
 import { Router } from '@angular/router';
 
@@ -19,8 +19,8 @@ export class SigninComponent {
   private formBuilder=inject(FormBuilder)
 
   signInForm=this.formBuilder.group({
-    email:'' ,
-    password:'',
+    email:['',[Validators.required,Validators.email]] ,
+    password:['',[Validators.required]],
   })
 
   signIn(){

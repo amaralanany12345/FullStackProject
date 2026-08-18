@@ -19,16 +19,19 @@ export class ItemService {
     return this.httpClient.get<ItemDto>(`https://localhost:7273/api/items/${itemId}`)
   }
   
-  GetItemsByCategoryId(categoryId:number,pageSize:number,pageNumber:number):Observable<ItemDto[]>{
-    return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/category/${categoryId}?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+  GetItemsByCategoryId(categoryId:number):Observable<ItemDto[]>{
+    return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/category/${categoryId}`)
   }
 
   DeleteItemById(itemId:number):Observable<void>{
     return this.httpClient.delete<void>(`https://localhost:7273/api/items/${itemId}`)
   }
 
-  UpdateItemById(itemId:number,itemDto:ItemDto):Observable<void>{
-    return this.httpClient.put<void>(`https://localhost:7273/api/items/${itemId}?newName=${itemDto.name}&newPrice=${itemDto.price}&stockQuantity=${itemDto.stockQuantity}`,itemDto)
+  UpdateItemById(itemDto:ItemDto):Observable<ItemDto>{
+    return this.httpClient.put<ItemDto>(`https://localhost:7273/api/items`,itemDto)
+  }
+  SearchAboutItem(itemName:string):Observable<ItemDto[]>{
+    return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/itemName/${itemName}`)
   }
   
 }

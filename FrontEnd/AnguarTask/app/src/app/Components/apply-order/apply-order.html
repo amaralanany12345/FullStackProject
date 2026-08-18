@@ -1,0 +1,12 @@
+<div class="products">
+    @for(item of allItems();track $index;let i=$index)
+    {
+         <div class="product">
+            <h2>{{item.name}}</h2>
+            <p>{{item.price}}</p> 
+            <!-- <label>quantity</label> -->
+            <!-- <input type="number" formControlName="quantity" [value]="item.stockQuantity" /> -->
+            <button (click)="AddItemToOrder(item)" >add to cart</button>
+        </div>
+    }
+</div>
