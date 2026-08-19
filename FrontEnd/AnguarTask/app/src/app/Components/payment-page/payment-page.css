@@ -29,12 +29,6 @@
   font-weight: 600;
   cursor: pointer;
 }
-.btns{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  gap: 10px;
-}
 .btn:hover {
   background-color: #1d4ed8;
 }

@@ -22,6 +22,9 @@ export class ItemService {
   GetItemsByCategoryId(categoryId:number):Observable<ItemDto[]>{
     return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/category/${categoryId}`)
   }
+  GetPaginatedItemsByCategoryId(categoryId:number,pageSize:number,pageNumber:number):Observable<ItemDto[]>{
+    return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/category/pagination/${categoryId}?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+  }
 
   DeleteItemById(itemId:number):Observable<void>{
     return this.httpClient.delete<void>(`https://localhost:7273/api/items/${itemId}`)

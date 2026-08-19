@@ -1,0 +1,11 @@
+<div class="receipts">
+    @for (item of allReceipts(); track $index) {
+
+        <div class="receipt">
+            <h3>{{item.totalAmount}}</h3>
+            <h3>{{item.createAt}}</h3>
+            <h3>{{item.orderId}}</h3>
+            <button class="details" (click)="viewDetials(item.orderId)">view details</button>
+        </div>
+    }
+</div>

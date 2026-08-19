@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateCategory } from './update-category';
+import { ReceiptComponent } from './receipt-component';
 
-describe('UpdateCategory', () => {
-  let component: UpdateCategory;
-  let fixture: ComponentFixture<UpdateCategory>;
+describe('ReceiptComponent', () => {
+  let component: ReceiptComponent;
+  let fixture: ComponentFixture<ReceiptComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UpdateCategory]
+      imports: [ReceiptComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UpdateCategory);
+    fixture = TestBed.createComponent(ReceiptComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

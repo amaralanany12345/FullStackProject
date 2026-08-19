@@ -1,120 +1,40 @@
-<div class="update-page">
-    <div class="update-card">
+<div class="body">
+    <div class="form">
         <h2>Update Item</h2>
-        <p class="subtitle">Update the item information below</p>
+        <!-- <p class="subtitle">Update the item information below</p> -->
         <form [formGroup]="updateItem" (ngSubmit)="UpdateItem()">
-            <div class="form-group">
-                <label for="id">Item ID</label>
-                <input id="id" type="number" formControlName="id" placeholder="Item ID" readonly />
+            <div class="formElement">
+                <label for="id">Item ID</label><br/>
+                <input id="id" type="number" formControlName="id" placeholder="id" readonly /><br>
             </div>
-            <div class="form-group">
-
+            <div class="formElement">
                 <label for="name">Name</label>
-
-                <input
-                    id="name"
-                    type="text"
-                    formControlName="name"
-                    placeholder="Enter item name"
-                    [class.invalid]="
-                        updateItem.controls.name.invalid &&
-                        updateItem.controls.name.touched
-                    "
-                />
-
-                @if (
-                    updateItem.controls.name.hasError('required') &&
-                    updateItem.controls.name.touched
-                ) {
-                    <span class="error">
-                        Please enter the item name.
-                    </span>
+                <input id="name" type="text" formControlName="name" placeholder="Enter item name"/>
+                @if (updateItem.controls.name.errors?.['required'] && updateItem.controls.name.touched) {
+                    <em class="error">Please enter the item name </em>
                 }
-
-                @if (
-                    updateItem.controls.name.hasError('minlength') &&
-                    updateItem.controls.name.touched
-                ) {
-                    <span class="error">
-                        Name must contain at least 3 characters.
-                    </span>
+                @if (updateItem.controls.name.errors?.['minlength'] && updateItem.controls.name.touched) {
+                    <em class="error">Name must contain at least 3 characters</em>
                 }
-
             </div>
-
-
-            <!-- Price -->
-            <div class="form-group">
-
+            <div class="formElement">
                 <label for="price">Price</label>
-
-                <input
-                    id="price"
-                    type="number"
-                    formControlName="price"
-                    placeholder="Enter price"
-                />
-
+                <input id="price" type="number" formControlName="price" placeholder="Enter price"/>
             </div>
-
-
-            <!-- Stock Quantity -->
-            <div class="form-group">
-
-                <label for="stockQuantity">
-                    Stock Quantity
-                </label>
-
-                <input
-                    id="stockQuantity"
-                    type="number"
-                    formControlName="stockQuantity"
-                    placeholder="Enter stock quantity"
-                />
-
+            <div class="formElement">
+                <label for="stockQuantity">Stock Quantity</label>
+                <input id="stockQuantity" type="number"formControlName="stockQuantity"placeholder="stockQuantity"/>
             </div>
-
-
-            <!-- Category -->
-            <div class="form-group">
-
-                <label for="categoryName">
-                    Category
-                </label>
-
-                <input
-                    id="categoryName"
-                    type="text"
-                    formControlName="categoryName"
-                    placeholder="Enter category name"
-                />
-
-            </div>
-
-
-            <!-- Buttons -->
+            <select class="selectedCategory" id="categoryName" formControlName="categoryName"  >
+            <option [value]="null">Select category</option>
+                @for (category of allCategories(); track $index) {
+                    <option [value]="category.name" >{{ category.name }}</option>
+                }
+            </select><br/>
             <div class="form-actions">
-
-                <button
-                    type="submit"
-                    class="update-btn"
-                    [disabled]="updateItem.invalid"
-                >
-                    Update Item
-                </button>
-
-                <button
-                    type="button"
-                    class="cancel-btn"
-                    routerLink="/home"
-                >
-                    Cancel
-                </button>
-
+                <button type="submit" class="btn" [disabled]="updateItem.invalid">Update Item</button>
+                <!-- <button type="button" class="cancel-btn" routerLink="/home">Cancel</button> -->
             </div>
-
         </form>
-
     </div>
-
 </div>

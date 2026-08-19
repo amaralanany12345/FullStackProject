@@ -1,47 +1,38 @@
-.signin-page {
-    min-height: 80vh;
+.body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 20px;
+    padding: 20px;
     background: #f5f7fa;
+    min-height: 80vh;
 }
-
-.signin-card {
+.form {
     width: 100%;
     max-width: 420px;
     background: white;
-    padding: 35px;
-    border-radius: 12px;
+    padding: 30px;
+    border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
-
-.signin-card h2 {
+.form h2 {
     margin: 0;
     text-align: center;
     font-size: 28px;
     color: #222;
 }
 
-.subtitle {
-    text-align: center;
-    color: #777;
-    margin-top: 8px;
-    margin-bottom: 30px;
+.formElement {
+    margin-bottom: 20px;
 }
 
-.form-group {
-    margin-bottom: 22px;
-}
-
-.form-group label {
+.formElement label {
     display: block;
     margin-bottom: 7px;
     font-weight: 600;
     color: #333;
 }
 
-.form-group input {
+.formElement input {
     width: 100%;
     box-sizing: border-box;
     padding: 12px 14px;
@@ -49,15 +40,13 @@
     border-radius: 7px;
     font-size: 15px;
     outline: none;
-    transition: 0.2s;
 }
 
-.form-group input:focus {
+.formElement input:focus {
     border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
-.form-group input.invalid {
+.formElement input.invalid {
     border-color: #dc3545;
 }
 
@@ -68,7 +57,7 @@
     font-size: 13px;
 }
 
-.server-error {
+.formError {
     padding: 10px 12px;
     margin-bottom: 20px;
     border-radius: 7px;
@@ -78,7 +67,7 @@
     font-size: 14px;
 }
 
-.signin-btn {
+.btn {
     width: 100%;
     padding: 12px;
     border: none;
@@ -91,19 +80,11 @@
     transition: 0.2s;
 }
 
-.signin-btn:hover:not(:disabled) {
+.btn:hover:not(:disabled) {
     background: #4338ca;
 }
 
-.signin-btn:disabled {
+.btn:disabled {
     background: #aaa;
     cursor: not-allowed;
-}
-
-@media (max-width: 500px) {
-
-    .signin-card {
-        padding: 25px 20px;
-    }
-
 }

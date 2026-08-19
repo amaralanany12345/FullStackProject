@@ -1,0 +1,15 @@
+<h1>{{totalPrice()}}</h1> 
+<button class="btn" (click)="ApplyPayment()">Apply Payment</button>
+<div class="items">
+    @for(orderItem of orderCartItems();track $index;let i=$index)
+    {
+         <div class="item">
+             <h2>{{orderItem.itemName}}</h2> 
+            <h3>price :{{orderItem.price}}</h3>
+            <p>Qnt: {{orderItem.quantity}}</p> 
+            <button class="btn" (click)="DeleteCartItem(orderItem.itemId)" >Delete</button>
+            <button class="btn" (click)="Increase(orderItem)" >+</button>
+            <button class="btn" (click)="Decrease(orderItem)" >-</button>
+        </div>
+    }
+</div> 

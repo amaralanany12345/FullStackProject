@@ -1,96 +1,28 @@
-<div class="signin-page">
-
-    <div class="signin-card">
-
+<div class="body">
+    <div class="form">
         <h2>Sign In</h2>
-        <p class="subtitle">Welcome back! Please sign in to continue.</p>
-
         <form [formGroup]="signInForm" (ngSubmit)="signIn()">
-
-            <!-- Email -->
-            <div class="form-group">
-
+            <div class="formElement">
                 <label for="email">Email</label>
-
-                <input
-                    id="email"
-                    type="email"
-                    formControlName="email"
-                    placeholder="Enter your email"
-                    [class.invalid]="
-                        signInForm.controls.email.invalid &&
-                        signInForm.controls.email.touched
-                    "
-                />
-
-                @if (
-                    signInForm.controls.email.hasError('required') &&
-                    signInForm.controls.email.touched
-                ) {
-                    <span class="error">
-                        Please enter your email.
-                    </span>
+                <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+                @if (signInForm.controls.email.errors?.['required'] && signInForm.controls.email.touched) {
+                    <em class="error">Please enter your email </em>
                 }
-
-                @if (
-                    signInForm.controls.email.hasError('email') &&
-                    signInForm.controls.email.touched
-                ) {
-                    <span class="error">
-                        Please enter a valid email.
-                    </span>
+                @if (signInForm.controls.email.errors?.['email'] && signInForm.controls.email.touched) {
+                    <em class="error">Please enter a valid email</em>
                 }
-
             </div>
-
-
-            <!-- Password -->
-            <div class="form-group">
-
+            <div class="formElement">
                 <label for="password">Password</label>
-
-                <input
-                    id="password"
-                    type="password"
-                    formControlName="password"
-                    placeholder="Enter your password"
-                    [class.invalid]="
-                        signInForm.controls.password.invalid &&
-                        signInForm.controls.password.touched
-                    "
-                />
-
-                @if (
-                    signInForm.controls.password.hasError('required') &&
-                    signInForm.controls.password.touched
-                ) {
-                    <span class="error">
-                        Please enter your password.
-                    </span>
+                <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+                @if (signInForm.controls.password.errors?.['required'] && signInForm.controls.password.touched) {
+                    <em class="error">Please enter your password.</em>
                 }
-
             </div>
-
-
-            <!-- API Error -->
-            @if (error()) {
-                <div class="server-error">
-                    {{ error() }}
-                </div>
-            }
-
-
-            <!-- Submit -->
-            <button
-                class="signin-btn"
-                [disabled]="signInForm.invalid"
-                type="submit"
-            >
-                Sign In
-            </button>
-
+                @if (error()) {
+                    <div class="formError">{{ error() }}</div>
+                }
+            <button class="btn" [disabled]="signInForm.invalid" type="submit">Sign In</button>
         </form>
-
     </div>
-
 </div>

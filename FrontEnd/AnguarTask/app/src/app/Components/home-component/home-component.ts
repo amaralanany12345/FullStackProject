@@ -14,10 +14,10 @@ import { CategoryService } from '../../Services/category-service';
 import { CategoryDto } from '../../Dtos/category-dto';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { interval, startWith, switchMap } from 'rxjs';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-home-component',
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,RouterLink],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
 })
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
       next:(res)=>{
         this.items.set(res)
       }
-    });
+    })
     this.categoryService.GetAllCategories().subscribe({
       next:(res)=>{
         this.categories.set(res)
@@ -47,46 +47,54 @@ export class HomeComponent implements OnInit {
 
       }
     })
-    this.orderService.GetCurrentOrder().subscribe({
-      next:(res)=>{
-        this.currentOrder.set(res)
-      },
-      error:(err)=>{
-        if (err.status === 404) {
-          this.orderService.CreateOrder().subscribe({
-            next: (order) => {
-              this.currentOrder.set(order);
-            },
-            error: (createError) => {
-              console.log(createError);
-            }
-          });
-        }
-          // this.orderService.CreateOrder().subscribe({
-          //   next:(val)=>{
-          //   }
-          // })
-      }
-    })
-    
-    this.userService.GetCurrentUser().subscribe({
+    interval(10000).pipe(startWith(0),switchMap(()=>
+    this.userService.GetCurrentUser())).subscribe({
       next:(res)=>{
         this.currentUser.set(res)
+        if(this.currentUser()?.role=="Customer"){
+          this.orderService.GetCurrentOrder().subscribe({
+            next:(res)=>{
+              this.currentOrder.set(res)
+            },
+            error:(err)=>{
+              if (err.status === 404) {
+                this.orderService.CreateOrder().subscribe({
+                  next: (val) => {
+                    this.currentOrder.set(val);
+                  },
+                  error: (error) => {
+                    console.log(error);
+                  }
+                });
+              }
+            }
+          })
+        }
       },
       error:(err)=>{
-        // alert("please refresh token")
-        // console.log(this.currentUser())
-        // this.userService.RefreshToken(this.userService.userEmail()).subscribe({
-        //   next:(res)=>{
-        //     console.log(res)
-        //   }
-        // })
-        console.log('GetCurrentUser failed');
-        console.log('Status:', err.status);
-        console.log('Error:', err);
-        // console.log("current user is nont found")
+        alert('please refresh token')
+        this.router.navigateByUrl('refreshToken')
+        console.log(err)
       }
     })
+  }
+
+  Paginate(pageNumber:number){
+    this.itemService.GetPaginatedItemsByCategoryId(1,2,pageNumber).subscribe({
+      next:(res)=>{
+        console.log(res)
+      }
+    })
+  }
+  
+  GetAllReceipts(){
+    this.router.navigateByUrl('receipts')
+  }
+  AddCategory(){
+    this.router.navigateByUrl('createCategory')
+  }
+  AddItem(){
+    this.router.navigateByUrl('createItem')
   }
 
   ViewDetails(itemId:number){
@@ -106,7 +114,7 @@ export class HomeComponent implements OnInit {
   }
 
   GetItemsByCategory(categoyId:number){   
-    // this.selectedCategoryId.set(categoyId) 
+    console.log(this.selectedCategory())
     this.itemService.GetItemsByCategoryId(categoyId).subscribe({
       next:(res)=>{
         this.items.set(res)
@@ -129,7 +137,7 @@ export class HomeComponent implements OnInit {
   GetOrderDetails(){
     this.orderService.GetCurrentOrder().subscribe({
       next:(res)=>{
-        this.router.navigate(['orders',res.id])
+        this.router.navigate(['activeOrder',res.id])
       }
     })
   }
@@ -138,10 +146,10 @@ export class HomeComponent implements OnInit {
     const orderItemDto:OrderItemDto={} as OrderItemDto
     orderItemDto.itemId=item.id
     orderItemDto.price=item.price
+    orderItemDto.itemName=item.name
     this.orderService.AddOrderItemToOrder(orderItemDto).subscribe({
       next:(res)=>{
-        this.router.navigate(['orders',this.currentOrder()?.id])
-        
+        this.router.navigate(['orders',this.currentOrder()?.id])        
       }
     })
   }
@@ -150,7 +158,6 @@ export class HomeComponent implements OnInit {
     this.itemService.SearchAboutItem(this.searchValue).subscribe({
       next:(res)=>{
         this.items.set(res)
-        // console.log(res)
       }
     })
   }

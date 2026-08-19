@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../Models/item';
 import { ItemDto } from '../../Dtos/item-dto';
 import { Location } from '@angular/common';
+import { CategoryService } from '../../Services/category-service';
+import { CategoryDto } from '../../Dtos/category-dto';
 
 @Component({
   selector: 'app-update-item',
@@ -17,10 +19,9 @@ export class UpdateItem implements OnInit {
   private formBuilder=inject(FormBuilder)
   item=signal<ItemDto| null>(null)
   itemId:number={} as number
-  // updateItemDto:ItemDto={} as ItemDto
-  // updateItem:FormBuilder={} as FormBuilder
+  allCategories=signal<CategoryDto[]>([])
   constructor(private itemService:ItemService,private activatedRoute:ActivatedRoute,
-    private router:Router){}
+    private router:Router,private categoryService:CategoryService){}
   ngOnInit(): void {
     const itemId=Number(this.activatedRoute.snapshot.paramMap.get('id'))
     this.itemService.GetItemById(itemId).subscribe({
@@ -33,6 +34,11 @@ export class UpdateItem implements OnInit {
           stockQuantity: res.stockQuantity,
           categoryName: res.categoryName
         })
+      }
+    })
+    this.categoryService.GetAllCategories().subscribe({
+      next:(res)=>{
+        this.allCategories.set(res)
       }
     })
   }

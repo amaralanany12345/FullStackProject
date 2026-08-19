@@ -1,4 +1,4 @@
-.products{
+.receipts{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 24px;
@@ -7,7 +7,7 @@
     margin: 0 auto;
     
 }
-.product{
+.receipt{
 
     background-color: white;
     border: 1px solid #e5e7eb;

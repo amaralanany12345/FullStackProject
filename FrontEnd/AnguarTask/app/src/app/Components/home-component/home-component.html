@@ -1,32 +1,40 @@
-<h2>products</h2>
-<div class="btns">
-    <button class="details" (click)="Signout()" > sign out</button>
-    @if(currentUser()?.role=="Customer"){ 
-        <button class="details" (click)="ApplyOrder()" >Apply Order</button>
-        <button class="details" (click)="GetOrderDetails()">Get Order Details</button>
-    }
-    @if(currentUser()?.role=="Admin"){
-        <button class="details" (click)="GetAllOrders()" >All Orders</button>
-        <button class="details" (click)="GetAllOrders()" >Add Item</button>
-        <button class="details" (click)="GetAllOrders()" >Add Category</button>
-    }
-</div>
-<ul>
-    <select
-    [ngModel]="selectedCategory()"
-    (ngModelChange)="GetItemsByCategory($event)"
->
-    <option [ngValue]="null">Select category</option>
+<nav class="nav">
+    <h2 >Products</h2>
+    <div >
+        @if(currentUser()?.role == "Customer") {
+             <a [routerLink]="['/activeOrder',currentOrder()?.id]" routerLinkActive="active" >Order Details</a>
+        }
 
-    @for (category of categories(); track category.id) {
-        <option [ngValue]="category.id">
-            {{ category.name }}
-        </option>
-    }
-</select>
-</ul>
-<input type="search" [(ngModel)]="searchValue" /><br>
-<button (click)="SearchAboutItem()">search</button>
+        @if(currentUser()?.role == "Admin") {
+            <a routerLink="/orders" routerLinkActive="active">All Orders</a>
+            <a routerLink="/createItem" routerLinkActive="active">Add Item</a>
+            <a routerLink="/add-createCategory" routerLinkActive="active">Add Category</a>
+            <a routerLink="/receipts" routerLinkActive="active">Receipts</a>
+        }
+        <button class="signOut" (click)="Signout()">Sign Out</button>
+
+    </div>
+</nav>
+
+<div class="middle">
+    <div class="categories">
+        <ul>
+            <select [ngModel]="selectedCategory()" (ngModelChange)="GetItemsByCategory($event)">
+            <option [value]="null">Select category</option>
+            @for (category of categories(); track category.id) {
+                <option [value]="category.id">
+                    {{category.name}}
+                </option>
+            }
+            </select>
+        </ul>
+    </div>
+    <div class="search">
+        <input type="search" [(ngModel)]="searchValue" /><br>
+        <button (click)="SearchAboutItem()">search</button>
+    </div>
+</div>
+
 <div class="products">
             @for(item of items();track $index;let i=$index)
             {
@@ -34,13 +42,13 @@
                     <h2>{{item.name}}</h2>
                     <p>{{item.price}}</p> 
                     <p>{{item.stockQuantity}}</p> 
-                    <button class="details" (click)="ViewDetails(item.id)">view details</button>
+                    <button class="btn" (click)="ViewDetails(item.id)">view details</button>
                     @if (currentUser()?.role=="Admin") {
-                        <button class="details" (click)="UpdateItem(item.id)">update Item</button>
-                        <button class="details" (click)="DeleteItem(item.id)">Delete item</button>
+                        <button class="btn" (click)="UpdateItem(item.id)">update Item</button>
+                        <button class="btn" (click)="DeleteItem(item.id)">Delete item</button>
                     }
                     @if (currentUser()?.role=='Customer') {
-                            <button class="details" (click)="AddToCart(item)">Add To Cart</button>
+                            <button class="btn" (click)="AddToCart(item)">Add To Cart</button>
                     }
                 </div>
             }
