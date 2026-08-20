@@ -1,0 +1,48 @@
+<div class="body">
+    <div class="form">
+        <h2>Create Item</h2>
+        <form (ngSubmit)="CreateItem()" [formGroup]="createItemForm">
+            <section>
+                <div class="formElement">
+
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="name" name="name" formControlName="name" >
+                    @if(createItemForm.controls.name.errors?.['required'] && createItemForm.controls.name.touched){
+                        <em class="error">please enter item name</em>
+                    }
+                    @if(createItemForm.controls.name.errors?.['minlength'] && createItemForm.controls.name.touched){
+                        <em class="error">item name must contain at least 3 characters</em>
+                    }
+                </div>
+                <div class="formElement">
+
+                    <label for="price">Price</label>
+                    <input type="number" id="price" placeholder="price" name="price" formControlName="price" >        
+                    @if(createItemForm.controls.price.errors?.['required'] && createItemForm.controls.price.touched){
+                        <em class="error">please enter price</em>
+                    }
+                </div>
+                <div class="formElement">
+
+                    <label for="stockQuantity">Stock Quantity</label>
+                    <input type="number" id="stockQuantity" placeholder="stockQuantity" name="stockQuantity" formControlName="stockQuantity" >
+                    @if(createItemForm.controls.stockQuantity.errors?.['required'] && createItemForm.controls.stockQuantity.touched){
+                        <em class="error">please enter stock quantity</em>
+                    }
+                </div>
+                <div class="formElement">
+                    <label for="categoryName">Category Name</label>
+                    <select class="selectedCategory" id="categoryName" formControlName="categoryName"  >
+                        <option [value]="null">Select category</option>
+                        @for (category of allCategories(); track $index) {
+                            <option [value]="category.name" >{{ category.name }}</option>
+                        }
+                    </select> 
+                </div>
+
+                <button   [disabled]="createItemForm.invalid" class="btn" type="submit" >create item</button>
+            </section>
+        </form>
+    </div>
+
+</div>

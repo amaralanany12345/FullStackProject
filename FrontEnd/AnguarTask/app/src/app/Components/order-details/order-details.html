@@ -1,0 +1,17 @@
+<h1>{{order()?.totalAmount}}</h1>
+<div class="orders">
+    @for(orderItem of orderCartItems();track $index;let i=$index)
+    {
+         <div class="order">
+             <h2>{{orderItem.itemName}}</h2> 
+            <h3>price :{{orderItem.price}}</h3>
+            <p>Qnt: {{orderItem.quantity}}</p> 
+        </div>
+    }
+    @empty {
+        <p>order is not found</p>
+    }
+
+</div> 
+
+

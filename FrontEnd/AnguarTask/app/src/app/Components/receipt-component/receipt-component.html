@@ -1,0 +1,13 @@
+<h2>Total price : {{receipt()?.totalAmount}}</h2>
+<div class="receipts">
+    @for (item of receiptOrderDetails(); track $index) {
+        <div class="receipt">
+            <h2>{{item.itemName}}</h2>
+            <h3>Price: {{item.price}}</h3> 
+            <h4>Qnt: {{item.quantity}}</h4> 
+        </div>
+    }
+    @empty {
+        <p>receipt is not found</p>
+    }
+</div>
