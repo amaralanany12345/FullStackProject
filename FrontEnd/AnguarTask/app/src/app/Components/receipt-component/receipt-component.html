@@ -1,13 +1,36 @@
-<h2>Total price : {{receipt()?.totalAmount}}</h2>
-<div class="receipts">
-    @for (item of receiptOrderDetails(); track $index) {
-        <div class="receipt">
-            <h2>{{item.itemName}}</h2>
-            <h3>Price: {{item.price}}</h3> 
-            <h4>Qnt: {{item.quantity}}</h4> 
+<div class="order-details-page">
+    @if (receipt(); as currentOrder) {
+        <div class="order-header">
+            <div>
+                <span class="page-label">Order Details</span>
+                <h1>Order {{ currentOrder.orderId }}</h1>
+            </div>
+            <div class="total-box">
+                <span>Total Amount</span>
+                <strong>{{ currentOrder.totalAmount }}</strong>
+            </div>
         </div>
-    }
-    @empty {
-        <p>receipt is not found</p>
+        <div class="items-section">
+            <div class="section-header">
+                <h2>Order Items</h2>
+                <span>{{ receiptOrderDetails().length }} items</span>
+            </div>
+            <div class="orders">
+                @for (orderItem of receiptOrderDetails();track orderItem.itemId) {
+                    <app-cart-item-details [cartItem]="orderItem" mode="view"></app-cart-item-details>
+                }
+                @empty {
+                    <div class="empty">
+                        <h3>No Items Found</h3>
+                        <p>This order doesn't contain any items.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    } @else {
+        <div class="empty-order">
+            <h2>Order Not Found</h2>
+            <p> The order you're looking for doesn't exist or may have been removed.</p>
+        </div>
     }
 </div>

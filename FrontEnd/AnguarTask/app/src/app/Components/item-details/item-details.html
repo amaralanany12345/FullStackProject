@@ -1,11 +1,34 @@
-<h2>{{item()?.name}}</h2>
-
-<div class="products">
-         <div class="product">
-            <h3>Price: {{item()?.price}}</h3>
-            <p>Qnt: {{item()?.stockQuantity}}</p> 
+<div class="details-page">
+    @if (item(); as item) {
+        <div class="details-card">
+            <div class="details-header">
+                <span class="details-label">Product Details</span>
+                <h2>
+                    {{ item.name }}
+                </h2>
+            </div>
+            <div class="details-info">
+                <div class="info-box">
+                    <span class="info-label">Price</span>
+                    <strong class="price">{{ item.price }}</strong>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Available Stock</span>
+                    <strong>{{ item.stockQuantity }}</strong>
+                </div>
+            </div>
+            <div class="details-footer">
+                @if (item.stockQuantity > 0) {
+                    <span class="stock available">In Stock</span>
+                } @else {
+                    <span class="stock unavailable">Out of Stock</span>
+                }
+            </div>
         </div>
+    } @else {
+        <div class="not-found">
+            <h2>Item Not Found</h2>
+            <p> The product you're looking for doesn't exist or may have been removed</p>
+        </div>
+    }
 </div>
-@if (!item()) {
-    <p>item is not found</p>
-}

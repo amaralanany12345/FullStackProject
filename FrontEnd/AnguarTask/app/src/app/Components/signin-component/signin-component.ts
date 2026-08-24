@@ -3,10 +3,11 @@ import { LoginDto } from '../../Dtos/login-dto';
 import { FormBuilder,ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../Services/user-service';
 import { Router } from '@angular/router';
+import { FormInput } from "../form-input/form-input";
 
 @Component({
   selector: 'app-signin-component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormInput],
   templateUrl: './signin-component.html',
   styleUrl: './signin-component.css',
 })

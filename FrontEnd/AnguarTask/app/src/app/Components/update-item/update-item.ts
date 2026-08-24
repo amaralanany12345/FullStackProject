@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder,FormControl,FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
 import { ItemService } from '../../Services/item-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,18 +7,19 @@ import { ItemDto } from '../../Dtos/item-dto';
 import { Location } from '@angular/common';
 import { CategoryService } from '../../Services/category-service';
 import { CategoryDto } from '../../Dtos/category-dto';
+import { FormInput } from "../form-input/form-input";
 
 @Component({
   selector: 'app-update-item',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormInput],
   templateUrl: './update-item.html',
   styleUrl: './update-item.css',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class UpdateItem implements OnInit {
 
   private formBuilder=inject(FormBuilder)
   item=signal<ItemDto| null>(null)
-  itemId:number={} as number
   allCategories=signal<CategoryDto[]>([])
   constructor(private itemService:ItemService,private activatedRoute:ActivatedRoute,
     private router:Router,private categoryService:CategoryService){}
@@ -52,12 +53,7 @@ export class UpdateItem implements OnInit {
   })
 
   UpdateItem(){
-    const updateItemDto:ItemDto={} as ItemDto
-    updateItemDto.id=this.updateItem.getRawValue().id
-    updateItemDto.name=this.updateItem.getRawValue().name
-    updateItemDto.price=this.updateItem.getRawValue().price
-    updateItemDto.stockQuantity=this.updateItem.getRawValue().stockQuantity
-    updateItemDto.categoryName=this.updateItem.getRawValue().categoryName
+    const updateItemDto=this.updateItem.getRawValue()
     this.itemService.UpdateItemById(updateItemDto).subscribe({
       next:()=>{
         this.router.navigate(['home'])

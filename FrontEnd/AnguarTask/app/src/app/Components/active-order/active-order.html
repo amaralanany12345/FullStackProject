@@ -1,18 +1,34 @@
-<h1>{{totalPrice()}}</h1> 
-<button class="btn" (click)="ApplyPayment()">Apply Payment</button>
-<div class="items">
-    @for(orderItem of orderCartItems();track $index;let i=$index)
-    {
-         <div class="item">
-             <h2>{{orderItem.itemName}}</h2> 
-            <h3>price :{{orderItem.price}}</h3>
-            <p>Qnt: {{orderItem.quantity}}</p> 
-            <button class="btn" (click)="DeleteCartItem(orderItem.itemId)" >Delete</button>
-            <button class="btn" (click)="Increase(orderItem)" >+</button>
-            <button class="btn" (click)="Decrease(orderItem)" >-</button>
+<div class="cart-page">
+    <div class="cart-header">
+        <div>
+            <span class="page-label">Shopping Cart</span>
+            <h1>Your Cart</h1>
+            <p>Review your items before completing your order</p>
+        </div>
+        @if (orderCartItems().length > 0) {
+            <div class="cart-summary">
+                <span>Total</span>
+                <strong>{{ totalPrice() }}</strong>
+                <button class="payment-btn" (click)="ApplyPayment()"> Apply Payment
+                </button>
+            </div>
+        }
+    </div>
+    @if (orderCartItems().length > 0) {
+        <div class="items">
+            @for (orderItem of orderCartItems();track orderItem.itemId) {
+                <app-cart-item-details [cartItem]="orderItem" mode="shop"
+                    (deleteItem)="DeleteCartItem(orderItem.itemId)"
+                    (decreaseItemQuantity)="Decrease(orderItem)"
+                    (increaseItemQuantity)="Increase(orderItem)">
+                </app-cart-item-details>
+            }
+        </div>
+    } @else {
+        <div class="empty-cart">
+            <div class="empty-icon">🛒</div>
+            <h2>Your Cart Is Empty</h2>
+            <p>You don't have any items yet.</p>
         </div>
     }
-    @empty {
-        <p>you don't have any items yet</p>
-    }
-</div> 
+</div>

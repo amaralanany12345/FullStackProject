@@ -28,7 +28,7 @@ export class AllReceiptsComponent implements OnInit {
   }
 
   viewDetials(orderId:number){
-    this.router.navigate(['receipts',orderId])
+    this.router.navigate(['home/receipts',orderId])
   }
 
 }

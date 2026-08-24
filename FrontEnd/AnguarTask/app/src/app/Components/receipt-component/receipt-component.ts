@@ -4,10 +4,11 @@ import { OrderService } from '../../Services/order-service';
 import { ReceiptService } from '../../Services/receipt-service';
 import { ReceiptDto } from '../../Dtos/receipt-dto';
 import { OrderItemDto } from '../../Dtos/order-item-dto';
+import { CartItemDetails } from "../cart-item-details/cart-item-details";
 
 @Component({
   selector: 'app-receipt-component',
-  imports: [],
+  imports: [CartItemDetails],
   templateUrl: './receipt-component.html',
   styleUrl: './receipt-component.css',
 })

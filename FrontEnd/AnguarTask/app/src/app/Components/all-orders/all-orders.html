@@ -1,14 +1,35 @@
-<h2>orders</h2>
-<div class="orders">
-    @for(item of orders();track $index;let i=$index)
-    {
-         <div class="order">
-            <h2>{{item.status}}</h2>
-            <p>{{item.totalAmount}}</p> 
-            <button class="details" (click)="ViewDetails(item.id)">view details</button>
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h2>Orders</h2>
         </div>
-    }
-    @empty {
-            <p>orders are not found</p>
+    </div>
+    <div class="orders">
+        @for (item of orders(); track item.id) {
+            <div class="order">
+                <div class="order-header">
+                    <span class="order-number">Order {{ item.id }}</span>
+                    <span
+                        class="status"
+                        [class.InProgress]="item.status === 'InProgress'"
+                        [class.Approved]="item.status === 'Approved'"
+                        [class.cancelled]="item.status === 'Cancelled'">
+                        {{ item.status }}
+                    </span>
+                </div>
+                <div class="order-info">
+                    <span>Total Amount</span>
+                    <strong>{{ item.totalAmount }}</strong>
+                </div>
+                <button class="details" (click)="ViewDetails(item.id)"> View Details →</button>
+            </div>
         }
+        @empty {
+            <div class="empty">
+                <h3>No Orders Found</h3>
+                <p>There are currently no orders to display.</p>
+            </div>
+        }
+    </div>
+
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user-service';
 import { ItemService } from '../../Services/item-service';
@@ -12,14 +12,15 @@ import { OrderItemDto } from '../../Dtos/order-item-dto';
 import { OrderDto } from '../../Dtos/order-dto';
 import { CategoryService } from '../../Services/category-service';
 import { CategoryDto } from '../../Dtos/category-dto';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { interval, startWith, switchMap } from 'rxjs';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, interval, startWith, switchMap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-home-component',
   imports: [ReactiveFormsModule,FormsModule,RouterLink],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
 
@@ -32,9 +33,26 @@ export class HomeComponent implements OnInit {
   searchValue=''
   pageNumber=signal<number>(1)
   totalItemLength=signal<number>(0)
+  searchControl=new FormControl('')
   constructor(private router:Router,private userService:UserService,
   private itemService:ItemService,private categoryService:CategoryService,private orderService:OrderService){}
   ngOnInit(): void {
+  this.searchControl.valueChanges.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(term => {
+        if (!term) {
+          return this.itemService.GetAllItems()
+        }
+        return this.itemService.SearchAboutItem(term)
+        })).subscribe({
+          next: (res) => {
+            this.items.set(res);
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
 
     interval(30000).pipe(startWith(0), switchMap(() => this.itemService.GetAllItems())).subscribe({
       next:(res)=>{
@@ -116,11 +134,11 @@ export class HomeComponent implements OnInit {
   }
 
   ViewDetails(itemId:number){
-    this.router.navigate(['items',itemId])
+    this.router.navigate(['home/items',itemId])
   }
 
   UpdateItem(itemId:number){
-    this.router.navigate(['updateItem',itemId])
+    this.router.navigate(['home/updateItem',itemId])
     
   }
   DeleteItem(itemId:number){
@@ -142,22 +160,6 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  GetAllOrders(){  
-    this.router.navigateByUrl("orders")
-  }
-
-  ApplyOrder(){
-    this.router.navigateByUrl('applyOrder')
-  }
-
-  GetOrderDetails(){
-    this.orderService.GetCurrentOrder().subscribe({
-      next:(res)=>{
-        this.router.navigate(['activeOrder',res.id])
-      }
-    })
-  }
-
   AddToCart(item:ItemDto){
     const orderItemDto:OrderItemDto={} as OrderItemDto
     orderItemDto.itemId=item.id
@@ -165,15 +167,7 @@ export class HomeComponent implements OnInit {
     orderItemDto.itemName=item.name
     this.orderService.AddOrderItemToOrder(orderItemDto).subscribe({
       next:(res)=>{
-        this.router.navigate(['orders',this.currentOrder()?.id])        
-      }
-    })
-  }
-
-  SearchAboutItem(){
-    this.itemService.SearchAboutItem(this.searchValue).subscribe({
-      next:(res)=>{
-        this.items.set(res)
+        this.router.navigate(['home/activeOrder',this.currentOrder()?.id])        
       }
     })
   }

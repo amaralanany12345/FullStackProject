@@ -25,7 +25,7 @@ export class AllOrders implements OnInit {
   }
 
   ViewDetails(orderId:number){
-    this.router.navigate(['orders',orderId])
+    this.router.navigate(['home/orders',orderId])
   }
 
 }

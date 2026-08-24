@@ -1,0 +1,22 @@
+<div class="cart-item">
+    <div class="item-info">
+        <h2>{{ cartItem().itemName }}</h2>
+        <span class="price">{{cartItem().price}}</span>
+    </div>
+    @if (mode() == "shop") {
+        <div class="item-actions">
+            <div class="quantity-control">
+                <button class="quantity-btn"(click)="onDecreaseItemQuantity()">                    −</button>
+                <span class="quantity">{{cartItem().quantity}}</span>
+                <button class="quantity-btn" (click)="onIncreaseItemQuantity()"> +</button>
+            </div>
+            <button class="delete-btn" (click)="onDeleteItem()"> Delete</button>
+        </div>
+    } @else {
+        <div class="quantity-display">
+            <span>Quantity</span>
+            <strong>{{ cartItem().quantity }}</strong>
+        </div>
+    }
+
+</div>

@@ -15,17 +15,14 @@ import { ActiveOrder } from './Components/active-order/active-order';
 
 
 export const routes: Routes = [
-    {path:'',component:SigninComponent},
-    {path:'home',component:HomeComponent},
-    {path:'items/:id',component:ItemDetails},
-    {path:'orders',component:AllOrders},
-    {path:'orders/:id',component:OrderDetails},
-    {path:'updateItem/:id',component:UpdateItem},
-    {path:'createCategory',component:CreateCategory},
-    {path:'createItem',component:CreateItem},
-    {path:'receipts',component:AllReceiptsComponent},
-    {path:'receipts/:id',component:ReceiptComponent},
-    {path:'paymentPage/:orderId',component:PaymentPage},
-    {path:'refreshToken',component:RefreshTokenComponent},
-    {path:'activeOrder/:orderId',component:ActiveOrder},
+    {
+        path:'',
+        loadComponent:()=> import('./Components/signin-component/signin-component')
+        .then(a=>a.SigninComponent)
+    },
+    {
+        path:'home',
+        loadChildren:()=>import('../app/HomeRoutes').then(a=>a.Home_Routes)
+    },
+    
 ];

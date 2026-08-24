@@ -1,14 +1,36 @@
-<div class="receipts">
-    @for (item of allReceipts(); track $index) {
-
-        <div class="receipt">
-            <h3>{{item.totalAmount}}</h3>
-            <h3>{{item.createAt}}</h3>
-            <h3>{{item.orderId}}</h3>
-            <button class="details" (click)="viewDetials(item.orderId)">view details</button>
+<div class="page">
+    <div class="page-header">
+        <div>
+            <span class="page-label">Financial</span>
+            <h2>Receipts</h2>
+            <p>View all payment receipts and their order details</p>
         </div>
-    }
-    @empty {
-        <p>receipts are not found</p>
-    }
+    </div>
+    <div class="receipts">
+        @for (item of allReceipts(); track item.orderId) {
+            <div class="receipt">
+                <div class="receipt-header">
+                    <span class="receipt-label">Receipt</span>
+                    <span class="order-id">Order {{ item.orderId }}</span>
+                </div>
+                <div class="receipt-info">
+                    <div class="info-item">
+                        <span>Total Amount</span>
+                        <strong class="amount">{{ item.totalAmount }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Created At</span>
+                        <strong>{{ item.createAt }}</strong>
+                    </div>
+                </div>
+                <button class="details" (click)="viewDetials(item.orderId)"> View Details →</button>
+            </div>
+        }
+        @empty {
+            <div class="empty">
+                <h3>No Receipts Found</h3>
+                <p>There are currently no receipts available.</p>
+            </div>
+        }
+    </div>
 </div>

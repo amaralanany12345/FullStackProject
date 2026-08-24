@@ -1,15 +1,121 @@
-* {
-    padding: 20px;
-    margin: 20px;
-    box-sizing: content-box;    
+.details-page {
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 20px;
+    background: #f8fafc;
+    box-sizing: border-box;
 }
-.product{
 
-    background-color: white;
+.details-card {
+    width: 100%;
+    max-width: 650px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 35px;
+    box-sizing: border-box;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
+}
+.details-header {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+}
+.details-label {
+   display: block;
+    margin-bottom: 8px;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.details-header h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.details-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.info-box {
+    padding: 20px;
+    background: #f8fafc;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
+
+.info-label {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.info-box strong {
+    color: #111827;
+    font-size: 21px;
+}
+
+.info-box .price {
+    color: #2563eb;
+}
+
+.details-footer {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.stock {
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.available {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.unavailable {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.not-found {
+    width: 100%;
+    max-width: 600px;
+    padding: 50px 30px;
+    text-align: center;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.not-found h2 {
+    margin: 0 0 10px;
+    color: #374151;
+    font-size: 24px;
+}
+
+.not-found p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 15px;
+}
+

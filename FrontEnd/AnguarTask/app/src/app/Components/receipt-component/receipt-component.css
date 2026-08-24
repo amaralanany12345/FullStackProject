@@ -1,17 +1,197 @@
-.receipts{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
-    padding: 30px;
-    max-width: 1200px;
+.order-details-page {
+    min-height: 70vh;
+
+    padding: 35px 30px;
+
+    box-sizing: border-box;
+
+    background: #f8fafc;
+}
+.order-header {
+    max-width: 1000px;
+
+    margin: 0 auto 30px;
+
+    padding: 25px 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.page-label {
+    color: #2563eb;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+}
+
+.order-header h1 {
+    margin: 7px 0 0;
+
+    color: #111827;
+
+    font-size: 28px;
+}
+
+.total-box {
+    min-width: 170px;
+
+    padding: 15px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    background: #eff6ff;
+
+    border-radius: 10px;
+
+    text-align: right;
+}
+
+.total-box span {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.total-box strong {
+    color: #2563eb;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+.items-section {
+    max-width: 1000px;
+
     margin: 0 auto;
 }
-.receipt{
-    background-color: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+.section-header {
     display: flex;
-    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
 }
+
+.section-header h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 21px;
+}
+
+.section-header span {
+    padding: 6px 11px;
+
+    background: #e5e7eb;
+
+    border-radius: 20px;
+
+    color: #4b5563;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.orders {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.empty {
+    padding: 60px 20px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+}
+
+.empty h3 {
+    margin: 0 0 8px;
+
+    color: #374151;
+
+    font-size: 20px;
+}
+
+.empty p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+.empty-order {
+    max-width: 600px;
+
+    margin: 80px auto;
+
+    padding: 60px 30px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.empty-order h2 {
+    margin: 0 0 10px;
+
+    color: #374151;
+
+    font-size: 24px;
+}
+
+.empty-order p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+

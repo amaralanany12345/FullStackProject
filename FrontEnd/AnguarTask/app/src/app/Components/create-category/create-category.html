@@ -1,29 +1,10 @@
 <div class="body">
     <div class="form">
         <h2>Create Category</h2>
-        <form (ngSubmit)="CreateCategory()" [formGroup]="createCategoryForm">
+        <form (ngSubmit)="createCategory()" [formGroup]="createCategoryForm">
             <section>
-                <div class="formElement">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="name" name="name" formControlName="name" >
-                    @if(createCategoryForm.controls.name.errors?.['required'] && createCategoryForm.controls.name.touched){
-                    <em class="error">please enter category name</em>
-                    }
-                    @if(createCategoryForm.controls.name.errors?.['minlength'] && createCategoryForm.controls.name.touched){
-                        <em class="error">please category name must contain at least 3 characters</em>
-                    }
-                </div>
-                <div class="formElement">
-
-                    <label for="description">description</label>
-                    <input type="text" id="description" placeholder="description" name="description" formControlName="description" >        
-                    @if(createCategoryForm.controls.description.errors?.['required'] && createCategoryForm.controls.description.touched){
-                    <em class="error">please enter category description</em>
-                    }
-                    @if(createCategoryForm.controls.description.errors?.['minlength'] && createCategoryForm.controls.description.touched){
-                        <em class="error">please category description must contain at least 3 characters</em>
-                    }
-            </div>
+                <app-form-input label="Category name" type="text" placeholder="enter category name" formControlName="name" />
+                <app-form-input label="Category description" type="text" placeholder="enter category description" formControlName="description" />
                 <button class="btn" type="submit" [disabled]="createCategoryForm.invalid" >create category</button>
             </section>
         </form>
