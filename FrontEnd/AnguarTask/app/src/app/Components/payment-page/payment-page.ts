@@ -5,10 +5,11 @@ import { PaymentService } from '../../Services/payment-service';
 import { OrderDto } from '../../Dtos/order-dto';
 import { OrderItemDto } from '../../Dtos/order-item-dto';
 import { OrderService } from '../../Services/order-service';
+import { CartItemDetails } from "../cart-item-details/cart-item-details";
 
 @Component({
   selector: 'app-payment-page',
-  imports: [],
+  imports: [CartItemDetails],
   templateUrl: './payment-page.html',
   styleUrl: './payment-page.css',
 })
@@ -31,7 +32,6 @@ export class PaymentPage implements OnInit {
   }
 
   ConfirmPayment(){
-    // const receiptDto:ReceiptDto={} as ReceiptDto
     this.paymentService.ApplyPayment().subscribe({
       next:(res)=>{
         this.router.navigateByUrl('home')

@@ -68,8 +68,8 @@ export class HomeComponent implements OnInit {
 
       }
     })
-    interval(10000).pipe(startWith(0),switchMap(()=>
-    this.userService.GetCurrentUser())).subscribe({
+    // interval(10000).pipe(startWith(0),switchMap(()=>
+    this.userService.GetCurrentUser().subscribe({
       next:(res)=>{
         this.currentUser.set(res)
         if(this.currentUser()?.role=="Customer"){
@@ -93,8 +93,8 @@ export class HomeComponent implements OnInit {
         }
       },
       error:(err)=>{
-        alert('please refresh token')
-        this.router.navigateByUrl('refreshToken')
+        // alert('please refresh token')
+        // this.router.navigateByUrl('refreshToken')
         console.log(err)
       }
     })

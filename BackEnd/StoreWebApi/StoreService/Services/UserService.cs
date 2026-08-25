@@ -89,7 +89,7 @@ namespace StoreService.Services
             {
                 Issuer = _jwt.Issuer,
                 Audience = _jwt.Audience,
-                Expires = DateTime.Now.AddMinutes(10),
+                Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Signingkey)),
                 SecurityAlgorithms.HmacSha256Signature),
                 Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
@@ -116,7 +116,7 @@ namespace StoreService.Services
                 UserId=user.Id,
                 Token=GenerateRandomRefreshToken(),
                 CreatedAt=DateTime.Now,
-                ExpiredAt=DateTime.Now.AddMinutes(30),
+                ExpiredAt=DateTime.Now.AddDays(30),
             };
             await _unitOfWork.RefreshTokens.CreateAsync(newRefreshToken);
             await _unitOfWork.SaveChangesAsync();
@@ -137,7 +137,7 @@ namespace StoreService.Services
             }
             refreshToken.Token=GenerateRandomRefreshToken();
             refreshToken.CreatedAt=DateTime.Now;
-            refreshToken.ExpiredAt=DateTime.Now.AddMinutes(30);
+            refreshToken.ExpiredAt=DateTime.Now.AddDays(30);
             await _unitOfWork.SaveChangesAsync();
             return ResultResponse<SigningResponse>.Pass(new SigningResponse
             {
@@ -151,7 +151,7 @@ namespace StoreService.Services
             var currentUserEmail = _contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Email)?.Value;
             if (currentUserEmail == null)
             {
-                return ResultResponse<User>.Fail("user is not found",ErrorTypes.NotFound,StatusCodes.Status404NotFound);
+                return ResultResponse<User>.Fail("user is not found",ErrorTypes.NotFound,StatusCodes.Status401Unauthorized);
             }
             return await GetUserByEmail(currentUserEmail);
         }

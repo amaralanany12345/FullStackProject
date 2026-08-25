@@ -136,14 +136,13 @@ namespace StoreWebApi.Controllers
         [HttpGet("pagination")]
         public async Task<IActionResult> GetItemsByPagination(int pageSize, int pageNumber)
         {
-            var result = await _ItemService.GetItemsByPagination(pageSize,pageNumber);
+            var result = await _ItemService.GetItemsByPagination(pageSize, pageNumber);
             if (!result.Success)
             {
                 return StatusCode(result.StatusCode, result.Error);
             }
             return StatusCode(result.StatusCode, result.Result);
         }
-
 
     }
 }
