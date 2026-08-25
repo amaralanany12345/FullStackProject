@@ -25,9 +25,15 @@ export class OrderDetails implements OnInit {
   private paymentService:PaymentService,private router:Router){}
   ngOnInit(): void {
     const orderId=Number(this.activatedRoute.snapshot.paramMap.get('id'))
-    this.orderService.GetOrderItemsById(orderId).subscribe({
-      next:(res)=>{
-        this.orderCartItems.set(res)
+    this.orderService.GetOrderById(orderId).subscribe({
+      next:(val)=>{
+        this.order.set(val)
+        this.orderService.GetOrderItemsById(orderId).subscribe({
+          next:(res)=>{
+            this.orderCartItems.set(res)
+            console.log(res)
+          }
+        })
       }
     })
   }

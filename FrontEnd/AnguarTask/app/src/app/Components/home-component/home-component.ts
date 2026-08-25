@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
           console.log(err);
         }
       })
-
+      //life updates 
     interval(30000).pipe(startWith(0), switchMap(() => this.itemService.GetAllItems())).subscribe({
       next:(res)=>{
         this.items.set(res)
@@ -93,8 +93,6 @@ export class HomeComponent implements OnInit {
         }
       },
       error:(err)=>{
-        // alert('please refresh token')
-        // this.router.navigateByUrl('refreshToken')
         console.log(err)
       }
     })

@@ -13,6 +13,7 @@ namespace StoreService.Interfaces
         Task<ResultResponse<OrderItemDto>> DecreaseQuantityOfItem(OrderItemDto orderItemDto);
         Task DeleteOrderItemFromOrder(int itemId);
         Task<ResultResponse<Order>> GetOrder();
+        Task<ResultResponse<OrderDto>> GetOrderById(int orderId);
         Task<ResultResponse<List<OrderItem>>> GetOrderItems();
         Task<ResultResponse<List<OrderItemDto>>> GetOrderItemsById(int orderId);
         Task CancelOrder();

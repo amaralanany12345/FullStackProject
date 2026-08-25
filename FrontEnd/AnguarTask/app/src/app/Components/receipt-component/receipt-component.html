@@ -1,13 +1,13 @@
 <div class="order-details-page">
-    @if (receipt(); as currentOrder) {
+    @if (receipt(); as receipt) {
         <div class="order-header">
             <div>
                 <span class="page-label">Order Details</span>
-                <h1>Order {{ currentOrder.orderId }}</h1>
+                <h1>Order {{ receipt.orderId }}</h1>
             </div>
             <div class="total-box">
                 <span>Total Amount</span>
-                <strong>{{ currentOrder.totalAmount }}</strong>
+                <strong>{{ receipt.totalAmount }}</strong>
             </div>
         </div>
         <div class="items-section">

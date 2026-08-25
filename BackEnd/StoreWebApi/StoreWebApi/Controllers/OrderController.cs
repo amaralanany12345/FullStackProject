@@ -50,6 +50,17 @@ namespace StoreWebApi.Controllers
             }
             return StatusCode(result.StatusCode, result.Result);
         }
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Customer")]
+        public async Task<IActionResult> GetOrderById(int id)
+        {
+            var result = await _orderService.GetOrderById(id);
+            if (!result.Success)
+            {
+                return StatusCode(result.StatusCode, result.Error);
+            }
+            return StatusCode(result.StatusCode, result.Result);
+        }
         /// <summary>
         /// add item to order
         /// </summary>

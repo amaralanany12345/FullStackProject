@@ -152,7 +152,6 @@ namespace StoreService.Services
 
         public async Task<ResultResponse<List<OrderItemDto>>> GetOrderItemsById(int orderId)
         {
-            //var order = await _unitOfWork.OrderRepository.GetOrder(_userService.GetCurrentUser().Result.Result.Id);
             var order=await GetOrder();
             if(order == null)
             {
@@ -225,6 +224,16 @@ namespace StoreService.Services
             item.StockQuantity++;
             await _unitOfWork.SaveChangesAsync();
             return ResultResponse<OrderItemDto>.Pass(_mapper.Map<OrderItemDto>(orderItem), StatusCodes.Status200OK);
+        }
+
+        public async Task<ResultResponse<OrderDto>> GetOrderById(int orderId)
+        {
+            var order=await _unitOfWork.Orders.GetAsync(orderId);
+            if(order == null)
+            {
+                return ResultResponse<OrderDto>.Fail("order is not found",ErrorTypes.NotFound,StatusCodes.Status404NotFound);
+            }
+            return ResultResponse<OrderDto>.Pass(_mapper.Map<OrderDto>(order), StatusCodes.Status200OK);
         }
     }
 }

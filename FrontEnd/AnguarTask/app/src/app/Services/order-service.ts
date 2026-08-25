@@ -28,6 +28,10 @@ export class OrderService {
   GetOrderItemsById(orderId:number):Observable<OrderItemDto[]>{
     return this.httpClient.get<OrderItemDto[]>(`https://localhost:7273/api/orders/orderItems/${orderId}`)
   }
+  GetOrderById(orderId:number):Observable<OrderDto>{
+    return this.httpClient.get<OrderDto>(`https://localhost:7273/api/orders/${orderId}`)
+
+  }
   CancelOrder(order:Order):Observable<void>{
     return this.httpClient.put<void>(`https://localhost:7273/api/orders/cancel`,order)
   }
