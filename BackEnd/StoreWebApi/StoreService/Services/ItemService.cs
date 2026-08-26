@@ -14,11 +14,13 @@ namespace StoreService.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWorkServiceForStoreDb _unitOfWork;
         private readonly ILogger<ItemService> _logger;
-        public ItemService(IMapper mapper, IUnitOfWorkServiceForStoreDb unitOfWork, ILogger<ItemService> logger)
+        private readonly IItemUpdatedNotifyService _itemUpdatedNotify;
+        public ItemService(IMapper mapper, IUnitOfWorkServiceForStoreDb unitOfWork, ILogger<ItemService> logger, IItemUpdatedNotifyService itemUpdatedNotify)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _itemUpdatedNotify = itemUpdatedNotify;
         }
         public async Task<ResultResponse<ItemDto>> CreateItem(string name, int price, int stockQuantity, string categoryName)
         {
@@ -78,6 +80,7 @@ namespace StoreService.Services
             item.Price = newPrice;
             item.StockQuantity = stockQuantity;
             await _unitOfWork.SaveChangesAsync();
+            await _itemUpdatedNotify.NotifyItemUpdating(item);
             return ResultResponse<ItemDto>.Pass(_mapper.Map<ItemDto>(item), StatusCodes.Status200OK);
         }
 

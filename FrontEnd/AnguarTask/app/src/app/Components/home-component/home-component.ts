@@ -37,29 +37,51 @@ export class HomeComponent implements OnInit {
   constructor(private router:Router,private userService:UserService,
   private itemService:ItemService,private categoryService:CategoryService,private orderService:OrderService){}
   ngOnInit(): void {
-  this.searchControl.valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap(term => {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(term => {
         if (!term) {
           return this.itemService.GetAllItems()
         }
         return this.itemService.SearchAboutItem(term)
-        })).subscribe({
-          next: (res) => {
-            this.items.set(res);
+      })).subscribe({
+        next: (res) => {
+          this.items.set(res);
         },
         error: (err) => {
           console.log(err);
         }
       })
-      //life updates 
-    interval(30000).pipe(startWith(0), switchMap(() => this.itemService.GetAllItems())).subscribe({
-      next:(res)=>{
-        this.items.set(res)
-        this.totalItemLength.set(this.items().length)
-      }
+      //life updates by polling 
+
+      // interval(30000).pipe(startWith(0),switchMap(()=>
+      //   this.itemService.GetAllItems())).subscribe({
+      //   next:(res)=>{
+      //     this.items.set(res)
+      //     this.totalItemLength.set(this.items().length)
+      //   }
+      // })
+
+      //life updates by pushing using SignalIr
+
+    this.itemService.startConnection()
+    this.itemService.receiveUpdatedingMessage(()=>{
+      this.itemService.GetAllItems().subscribe({
+        next:(res)=>{
+          this.items.set(res)
+          this.totalItemLength.set(this.items().length)
+        }
+      })
     })
+
+    this.itemService.GetAllItems().subscribe({
+        next:(res)=>{
+          this.items.set(res)
+          this.totalItemLength.set(this.items().length)
+        }
+      })
+
     this.categoryService.GetAllCategories().subscribe({
       next:(res)=>{
         this.categories.set(res)
@@ -68,7 +90,7 @@ export class HomeComponent implements OnInit {
 
       }
     })
-    // interval(10000).pipe(startWith(0),switchMap(()=>
+
     this.userService.GetCurrentUser().subscribe({
       next:(res)=>{
         this.currentUser.set(res)

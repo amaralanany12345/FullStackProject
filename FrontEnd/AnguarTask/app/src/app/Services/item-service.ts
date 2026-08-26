@@ -2,12 +2,27 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemDto } from '../Dtos/item-dto';
+import * as signalR from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
   constructor(private httpClient:HttpClient){}
+  private hubConnection:signalR.HubConnection={} as signalR.HubConnection
+
+  startConnection(){
+    this.hubConnection=new signalR.HubConnectionBuilder()
+    .withUrl('https://localhost:7273/hub')
+    .build()
+    this.hubConnection.start()
+  }
+
+  receiveUpdatedingMessage(callback:()=>void){
+    this.hubConnection.on("itemUpdated",()=>{
+        callback()
+    })
+  }
 
   CreateItem(itemDto:ItemDto):Observable<ItemDto>{
     return this.httpClient.post<ItemDto>(`https://localhost:7273/api/items`,itemDto)

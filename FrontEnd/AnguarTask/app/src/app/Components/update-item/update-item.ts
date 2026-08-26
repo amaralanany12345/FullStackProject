@@ -22,7 +22,7 @@ export class UpdateItem implements OnInit {
   item=signal<ItemDto| null>(null)
   allCategories=signal<CategoryDto[]>([])
   constructor(private itemService:ItemService,private activatedRoute:ActivatedRoute,
-    private router:Router,private categoryService:CategoryService){}
+    private router:Router,private location:Location,private categoryService:CategoryService){}
   ngOnInit(): void {
     const itemId=Number(this.activatedRoute.snapshot.paramMap.get('id'))
     this.itemService.GetItemById(itemId).subscribe({
@@ -56,7 +56,7 @@ export class UpdateItem implements OnInit {
     const updateItemDto=this.updateItem.getRawValue()
     this.itemService.UpdateItemById(updateItemDto).subscribe({
       next:()=>{
-        this.router.navigate(['home'])
+        this.location.back()
       },
       error:(err)=>{
         console.log(err)

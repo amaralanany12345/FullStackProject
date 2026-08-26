@@ -17,6 +17,7 @@ using StoreService.Services;
 using StoreWebApi.Actions;
 using StoreService.Helper;
 using StoreDataBase.Repositories;
+using StoreWebApi.ServiceModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
 builder.Services.AddControllers().AddNewtonsoftJson(x =>
     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+builder.Services.AddSignalR();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -88,6 +91,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IOrderService,OrderService>();
 builder.Services.AddScoped<IEmailService,EmailService>();
+builder.Services.AddScoped<IItemUpdatedNotifyService,ItemUpdatedNotifyService>();
 builder.Services.AddScoped<IPaymentGateWayService, PaymentGateWayService>();
 builder.Services.AddScoped(typeof(IGenericRepoService<>), typeof(GenericRepoServiceForStoreDb<>));
 builder.Services.AddScoped(typeof(IGenericRepoService<>), typeof(GenericRepoServiceForWalletDb<>));
@@ -177,6 +181,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<UpdatingHub>("/hub");
 
 
 app.Run();

@@ -22,14 +22,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return throwError(() => error)
       }
       
-      return userService
-        .RefreshToken(userService.userEmail())
-        .pipe(
+      return userService.RefreshToken(userService.userEmail()).pipe(
           switchMap(res => {
             const refreshReq = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${res.jwtToken}`
-              }
+              },
             })
             return next(refreshReq)
           }),
