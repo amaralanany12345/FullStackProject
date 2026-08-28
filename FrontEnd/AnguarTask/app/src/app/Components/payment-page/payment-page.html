@@ -1,8 +1,41 @@
-<button class="btn" (click)="ConfirmPayment()" >confirm payment</button>
-<h2>Total price: {{order()?.totalAmount}} $</h2>
-<div class="orders">
-    @for(orderItem of orderItems();track $index;let i=$index)
-    {
-        <app-cart-item-details [cartItem]="orderItem" />
+<div class="payment-page">
+    @if (order(); as currentOrder) {
+        <div class="payment-header">
+            <div class="header-content">
+                <span class="page-label">Payment</span>
+                <h1>Confirm Your Order</h1>
+                <p>Review your order items and confirm your payment</p>
+            </div>
+            <div class="payment-summary">
+                <span>Total Price</span>
+                <strong>{{ currentOrder.totalAmount }} $</strong>
+                <button class="confirm-btn" (click)="ConfirmPayment()">✓ Confirm Payment</button>
+            </div>
+        </div>
+        <div class="items-section">
+            <div class="section-header">
+                <h2>Order Items</h2>
+                <span>{{ orderItems().length }} items</span>
+            </div>
+            <div class="orders">
+                @for (
+                    orderItem of orderItems();
+                    track orderItem.itemId
+                ) {
+                    <app-cart-item-details [cartItem]="orderItem"></app-cart-item-details>
+                }
+                @empty {
+                    <div class="empty">
+                        <h3>No Items Found</h3>
+                        <p>There are no items in this order</p>
+                    </div>
+                }
+            </div>
+        </div>
+    } @else {
+        <div class="not-found">
+            <h2>Order Not Found</h2>
+            <p>The order you're trying to pay for could not be found</p>
+        </div>
     }
-</div> 
+</div>

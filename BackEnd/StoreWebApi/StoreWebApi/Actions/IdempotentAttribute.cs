@@ -23,13 +23,11 @@ namespace StoreWebApi.Actions
             var key = context.HttpContext.Request.Headers["Idempotency-Key"].FirstOrDefault();
             if (key==null)
             {
-                Console.WriteLine("key is not found");
                 return;
             }
             var existingIdempotency=await _context.IdempotencyRecords.Where(a=>a.Key==key).FirstOrDefaultAsync();
             if(existingIdempotency!=null)
             {
-                Console.WriteLine("idempotency key is not found");
                 context.Result = new ContentResult
                 {
                     StatusCode=existingIdempotency.StatusCode,
@@ -40,8 +38,6 @@ namespace StoreWebApi.Actions
             }
             else
             {
-                Console.WriteLine("idempotency key is exist");
-
                 var executedContext = await next();
                 if(executedContext.Result is ObjectResult result)
                 {
