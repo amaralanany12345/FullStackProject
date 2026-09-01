@@ -4,10 +4,12 @@ import { OrderService } from '../../Services/order-service';
 import { OrderDto } from '../../Dtos/order-dto';
 import { OrderItemDto } from '../../Dtos/order-item-dto';
 import { Router } from '@angular/router';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 
 @Component({
   selector: 'app-all-orders',
-  imports: [],
+  imports: [ScrollingModule],
   templateUrl: './all-orders.html',
   styleUrl: './all-orders.css',
 })

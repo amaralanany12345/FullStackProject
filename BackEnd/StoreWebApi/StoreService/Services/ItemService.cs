@@ -44,7 +44,7 @@ namespace StoreService.Services
             }
             await _unitOfWork.Items.CreateAsync(newItem);
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation($"item is created with name{newItem.Name} and it belong to category {category.Name}");
+            _logger.LogInformation($"item is created with name {newItem.Name} and it belong to category {category.Name}");
             return ResultResponse<ItemDto>.Pass(_mapper.Map<ItemDto>(newItem),StatusCodes.Status201Created);
         }
 

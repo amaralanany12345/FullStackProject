@@ -31,8 +31,8 @@ export class CreateItem implements OnInit {
   createItemForm=this.formBuilder.nonNullable.group({
     id:[0],
     name: ['',[Validators.required,Validators.minLength(3)]],
-    price: [0,Validators.required],
-    stockQuantity: [0,Validators.required],
+    price: [Validators.required],
+    stockQuantity: [Validators.required],
     categoryName: ['',Validators.required]
   })
   

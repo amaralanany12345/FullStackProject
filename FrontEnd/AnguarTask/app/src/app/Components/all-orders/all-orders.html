@@ -5,32 +5,35 @@
             <p>view and manage order in store</p>
         </div>
     </div>
-    <div class="orders">
-        @for (item of orders(); track item.id) {
-            <div class="order">
-                <div class="order-header">
-                    <span class="order-number">Order {{ item.id }}</span>
-                    <span
-                        class="status"
-                        [class.InProgress]="item.status === 'InProgress'"
-                        [class.Approved]="item.status === 'Approved'"
-                        [class.cancelled]="item.status === 'Cancelled'">
-                        {{ item.status }}
-                    </span>
+    <cdk-virtual-scroll-viewport  class="orders-viewport" itemSize="200">
+        <div class="order" *cdkVirtualFor="let item of orders()">
+            <div class="order-header">
+            <!-- @for (item of orders(); track item.id) { -->
+                <div class="order">
+                    <div class="order-header">
+                        <span class="order-number">Order {{ item.id }}</span>
+                        <span
+                            class="status"
+                            [class.InProgress]="item.status === 'InProgress'"
+                            [class.Approved]="item.status === 'Approved'"
+                            [class.cancelled]="item.status === 'Cancelled'">
+                            {{ item.status }}
+                        </span>
+                    </div>
+                    <div class="order-info">
+                        <span>Total Amount</span>
+                        <strong>{{ item.totalAmount }}</strong>
+                    </div>
+                    <button class="details" (click)="ViewDetails(item.id)"> View Details →</button>
                 </div>
-                <div class="order-info">
-                    <span>Total Amount</span>
-                    <strong>{{ item.totalAmount }}</strong>
+            </div>
+            <!-- } -->
+            <!-- @empty {
+                <div class="empty">
+                    <h3>No Orders Found</h3>
+                    <p>There are currently no orders to display.</p>
                 </div>
-                <button class="details" (click)="ViewDetails(item.id)"> View Details →</button>
-            </div>
-        }
-        @empty {
-            <div class="empty">
-                <h3>No Orders Found</h3>
-                <p>There are currently no orders to display.</p>
-            </div>
-        }
-    </div>
-
+            } -->
+        </div>
+    </cdk-virtual-scroll-viewport>
 </div>
