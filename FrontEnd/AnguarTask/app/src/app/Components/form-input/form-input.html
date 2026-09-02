@@ -1,11 +1,10 @@
 <div class="formElement">
     <label >{{ label }}</label>
     <input [class.invalid]="control?.invalid && control?.touched" [type]="type" [placeholder]="placeholder"
-    [value]="value" (input)="onInput($event)" (blur)="onBlur()"/>
+    [value]="value" [disabled]="disabled" (input)="onInput($event)" (blur)="onBlur()"/>
     @if (control?.errors?.['required'] && control?.touched) {
         <em class="error"> Please enter {{ label }} </em>
     }
-
     @if (control?.errors?.['email'] && control?.touched) {
         <em class="error">Please enter a valid email</em>
     }

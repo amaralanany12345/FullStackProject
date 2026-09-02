@@ -21,8 +21,7 @@ export class OrderDetails implements OnInit {
   totalPrice=signal<number>(0)
   orderCartItems=signal<OrderItemDto[]>([])
 
-  constructor(private orderService:OrderService,private activatedRoute:ActivatedRoute,
-  private paymentService:PaymentService,private router:Router){}
+  constructor(private orderService:OrderService,private activatedRoute:ActivatedRoute){}
   ngOnInit(): void {
     const orderId=Number(this.activatedRoute.snapshot.paramMap.get('id'))
     this.orderService.GetOrderById(orderId).subscribe({
@@ -31,7 +30,6 @@ export class OrderDetails implements OnInit {
         this.orderService.GetOrderItemsById(orderId).subscribe({
           next:(res)=>{
             this.orderCartItems.set(res)
-            console.log(res)
           }
         })
       }

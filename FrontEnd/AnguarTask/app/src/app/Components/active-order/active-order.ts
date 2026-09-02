@@ -14,12 +14,12 @@ import { CartItemDetails } from "../cart-item-details/cart-item-details";
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ActiveOrder implements OnInit {
-
+  //change detector ref
   order=signal<OrderDto|null>(null)
   totalPrice=signal<number>(0)
   orderCartItems=signal<OrderItemDto[]>([])
   constructor(private orderService:OrderService,private activatedRoute:ActivatedRoute,
-  private paymentService:PaymentService,private router:Router){}
+  private router:Router){}
   ngOnInit(): void {
     const orderId=Number(this.activatedRoute.snapshot.paramMap.get('orderId'))
     this.orderService.GetCurrentOrder().subscribe({

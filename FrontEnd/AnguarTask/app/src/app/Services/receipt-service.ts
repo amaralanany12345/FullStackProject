@@ -1,20 +1,24 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReceiptDto } from '../Dtos/receipt-dto';
+import { SKIP_AUTH } from '../SKIP_AUTH';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
+// @Injectable({
+//   providedIn: 'root',
+// })
 export class ReceiptService {
 
   constructor(private httpClient:HttpClient){}
 
   GetAllReciepts():Observable<ReceiptDto[]>{
-    return this.httpClient.get<ReceiptDto[]>(`https://localhost:7273/api/Receipt`)
+    const newHttpContext=new HttpContext().set(SKIP_AUTH,false)
+    return this.httpClient.get<ReceiptDto[]>(`https://localhost:7273/api/Receipt`,{context:newHttpContext})
   }
   GetRecieptByOrderId(orderId:number):Observable<ReceiptDto>{
-    return this.httpClient.get<ReceiptDto>(`https://localhost:7273/api/Receipt/${orderId}`)
+    const newHttpContext=new HttpContext().set(SKIP_AUTH,false)
+    return this.httpClient.get<ReceiptDto>(`https://localhost:7273/api/Receipt/${orderId}`,{context:newHttpContext})
   }
   
 }

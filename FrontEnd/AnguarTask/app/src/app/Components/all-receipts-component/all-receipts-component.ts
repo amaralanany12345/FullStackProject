@@ -6,9 +6,10 @@ import { OrderService } from '../../Services/order-service';
 
 @Component({
   selector: 'app-all-receipts-component',
-  imports: [],
+  // imports: [],
   templateUrl: './all-receipts-component.html',
   styleUrl: './all-receipts-component.css',
+  standalone:false
 })
 export class AllReceiptsComponent implements OnInit {
 

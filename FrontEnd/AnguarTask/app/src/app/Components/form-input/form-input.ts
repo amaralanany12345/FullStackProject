@@ -1,11 +1,18 @@
-import {Component,Input} from '@angular/core'
-import {ControlValueAccessor,NgControl} from '@angular/forms'
+import {Component,forwardRef,input,Input, Self} from '@angular/core'
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, ɵInternalFormsSharedModule } from '@angular/forms'
 
 @Component({
   selector: 'app-form-input',
-  imports: [],
+  imports: [ɵInternalFormsSharedModule],
   templateUrl: './form-input.html',
-  styleUrl: './form-input.css'
+  styleUrl: './form-input.css',
+//   providers: [
+//   {
+//     provide: NG_VALUE_ACCESSOR,
+//     useExisting: forwardRef(() => FormInput),
+//     multi: true
+//   }
+// ]
 })
 
 export class FormInput implements ControlValueAccessor {
@@ -13,35 +20,42 @@ export class FormInput implements ControlValueAccessor {
   @Input() label = ''
   @Input() type = 'text'
   @Input() placeholder = ''
+  @Input() controlFormName='name'
+  
   value = ''
+  disabled=false
 
   private onTouched: () => void = () => {}
+  private onChanged: (value:string) => void = () => {}
 
-  constructor(private ngControl: NgControl) {
+  constructor(@Self() private ngControl: NgControl) {
     this.ngControl.valueAccessor = this
   }
 
   get control(){
     return this.ngControl.control
   }
+
   writeValue(value: string): void {
+    this.value=value 
   }
 
   registerOnChange(fn: (value: string) => void): void {
-    this.writeValue = fn
+    this.onChanged=fn
   }
 
   registerOnTouched(fn: () => void): void {
-    this.onTouched = fn
+    this.onTouched=fn
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this.disabled=isDisabled
   }
 
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement
     this.value = input.value
-    this.writeValue(this.value)
+    this.onChanged(this.value)
   }
 
   onBlur(): void {

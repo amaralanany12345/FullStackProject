@@ -2,8 +2,12 @@ import {HttpErrorResponse,HttpInterceptorFn} from '@angular/common/http';
 import { inject } from '@angular/core';
 import {catchError,switchMap,throwError} from 'rxjs';
 import { UserService } from '../Services/user-service';
+import { SKIP_AUTH } from '../SKIP_AUTH';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  if(req.context.get(SKIP_AUTH)){
+    return next(req)
+  }
   const userService = inject(UserService)
   const token = userService.jwtToken()
 
@@ -16,7 +20,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     }
   })
 
-  return next(authReq).pipe(
+  return next(authReq)
+  .pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status !== 401) {
         return throwError(() => error)

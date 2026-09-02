@@ -1,7 +1,7 @@
 <div class="body">
     <div class="form">
         <h2>Update Item</h2>
-        <form [formGroup]="updateItem" (ngSubmit)="UpdateItem()">
+        <form [formGroup]="updateItemForm" (ngSubmit)="UpdateItem()">
             <div class="formElement">
                 <label for="id">Item ID</label><br/>
                 <input id="id" type="number" formControlName="id" placeholder="id" readonly /><br>
@@ -16,7 +16,7 @@
                 }
             </select><br/>
             <div class="form-actions">
-                <button type="submit" class="btn" [disabled]="updateItem.invalid">Update Item</button>
+                <button type="submit" class="btn" [disabled]="updateItemForm.invalid">Update Item</button>
             </div>
         </form>
     </div>

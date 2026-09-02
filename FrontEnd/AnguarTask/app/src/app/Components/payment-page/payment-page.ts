@@ -9,9 +9,9 @@ import { CartItemDetails } from "../cart-item-details/cart-item-details";
 
 @Component({
   selector: 'app-payment-page',
-  imports: [CartItemDetails],
   templateUrl: './payment-page.html',
   styleUrl: './payment-page.css',
+  standalone:false
 })
 export class PaymentPage implements OnInit {
   order=signal<OrderDto|null>(null)

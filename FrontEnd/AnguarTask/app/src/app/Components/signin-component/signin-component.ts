@@ -12,13 +12,10 @@ import { FormInput } from "../form-input/form-input";
   styleUrl: './signin-component.css',
 })
 export class SigninComponent {
-  // loginDto:LoginDto={} as LoginDto
   error=signal<string|null>(null)
-  constructor(private userService:UserService,private router:Router){
-
-  }
+  constructor(private userService:UserService,private router:Router){}
+  
   private formBuilder=inject(FormBuilder)
-
   signInForm=this.formBuilder.group({
     email:['',[Validators.required,Validators.email]] ,
     password:['',[Validators.required]],
@@ -31,7 +28,6 @@ export class SigninComponent {
     this.userService.SignIn(loginDto).subscribe({
       next:(res)=>{
         this.router.navigateByUrl('home')
-        console.log(res)
       },
       error:(err:Error)=>{
         this.error.set(err.message)

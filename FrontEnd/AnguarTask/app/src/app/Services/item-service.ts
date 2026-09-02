@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemDto } from '../Dtos/item-dto';
 import * as signalR from '@microsoft/signalr';
+import { SKIP_AUTH } from '../SKIP_AUTH';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,8 @@ export class ItemService {
   }
 
   CreateItem(itemDto:ItemDto):Observable<ItemDto>{
-    return this.httpClient.post<ItemDto>(`https://localhost:7273/api/items`,itemDto)
+    const newHttpContext=new HttpContext().set(SKIP_AUTH,false)
+    return this.httpClient.post<ItemDto>(`https://localhost:7273/api/items`,itemDto,{context:newHttpContext})
   }
   GetAllItems():Observable<ItemDto[]>{
     return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items`)
@@ -37,20 +39,19 @@ export class ItemService {
   GetItemsByCategoryId(categoryId:number):Observable<ItemDto[]>{
     return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/category/${categoryId}`)
   }
-  // GetPaginatedItemsByCategoryId(categoryId:number,pageSize:number,pageNumber:number):Observable<ItemDto[]>{
-  //   return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/category/pagination/${categoryId}?pageSize=${pageSize}&pageNumber=${pageNumber}`)
-  // }
 
   GetItemsByPagination(pageSize:number,pageNumber:number):Observable<ItemDto[]>{
     return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/pagination?pageSize=${pageSize}&pageNumber=${pageNumber}`)
   }
 
   DeleteItemById(itemId:number):Observable<void>{
-    return this.httpClient.delete<void>(`https://localhost:7273/api/items/${itemId}`)
+    const newHttpContext=new HttpContext().set(SKIP_AUTH,false)
+    return this.httpClient.delete<void>(`https://localhost:7273/api/items/${itemId}`,{context:newHttpContext})
   }
 
   UpdateItemById(itemDto:ItemDto):Observable<ItemDto>{
-    return this.httpClient.put<ItemDto>(`https://localhost:7273/api/items`,itemDto)
+    const newHttpContext=new HttpContext().set(SKIP_AUTH,false)
+    return this.httpClient.put<ItemDto>(`https://localhost:7273/api/items`,itemDto,{context:newHttpContext})
   }
   SearchAboutItem(itemName:string):Observable<ItemDto[]>{
     return this.httpClient.get<ItemDto[]>(`https://localhost:7273/api/items/itemName/${itemName}`)

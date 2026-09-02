@@ -23,6 +23,5 @@ export const routes: Routes = [
     {
         path:'home',
         loadChildren:()=>import('../app/HomeRoutes').then(a=>a.Home_Routes)
-    },
-    
+    }    
 ];

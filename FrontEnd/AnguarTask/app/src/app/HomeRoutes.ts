@@ -1,5 +1,3 @@
-import path from "path";
-
 export const Home_Routes=[
     {
         path:'',
@@ -23,13 +21,13 @@ export const Home_Routes=[
     },
     {
         path:'receipts',
-        loadComponent:()=> import('./Components/all-receipts-component/all-receipts-component')
-        .then(a=>a.AllReceiptsComponent)
+        loadChildren:()=> import('./Components/all-receipts-component/all-receiptsModule')
+        .then(a=>a.AllReceiptModule)
     },
     {
         path:'receipts/:id',
-        loadComponent:()=> import('./Components/receipt-component/receipt-component')
-        .then(a=>a.ReceiptComponent)
+        loadChildren:()=> import('./Components/receipt-component/receipt-component-module')
+        .then(a=>a.ReceiptModule)
     },
     {
         path:'activeOrder/:orderId',
@@ -53,7 +51,7 @@ export const Home_Routes=[
     },
     {
         path:'paymentPage/:orderId',
-        loadComponent:()=> import('./Components/payment-page/payment-page')
-        .then(a=>a.PaymentPage)
+        loadChildren:()=> import('./Components/payment-page/payment-page-module')
+        .then(a=>a.PaymentPageModule)
     },
 ]

@@ -8,9 +8,9 @@ import { CartItemDetails } from "../cart-item-details/cart-item-details";
 
 @Component({
   selector: 'app-receipt-component',
-  imports: [CartItemDetails],
   templateUrl: './receipt-component.html',
   styleUrl: './receipt-component.css',
+  standalone:false
 })
 export class ReceiptComponent implements OnInit {
 

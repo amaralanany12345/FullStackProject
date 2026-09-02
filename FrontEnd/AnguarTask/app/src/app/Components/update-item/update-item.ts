@@ -22,13 +22,13 @@ export class UpdateItem implements OnInit {
   item=signal<ItemDto| null>(null)
   allCategories=signal<CategoryDto[]>([])
   constructor(private itemService:ItemService,private activatedRoute:ActivatedRoute,
-    private router:Router,private location:Location,private categoryService:CategoryService){}
+  private location:Location,private categoryService:CategoryService){}
   ngOnInit(): void {
     const itemId=Number(this.activatedRoute.snapshot.paramMap.get('id'))
     this.itemService.GetItemById(itemId).subscribe({
       next:(res)=>{
         this.item.set(res)
-        this.updateItem.patchValue({
+        this.updateItemForm.patchValue({
           id: res.id,
           name: res.name,
           price: res.price,
@@ -43,7 +43,7 @@ export class UpdateItem implements OnInit {
       }
     })
   }
-  updateItem=this.formBuilder.nonNullable.group({
+  updateItemForm=this.formBuilder.nonNullable.group({
     
     id:[0,Validators.required],
     name:["",[Validators.required,Validators.minLength(3)]],
@@ -53,7 +53,7 @@ export class UpdateItem implements OnInit {
   })
 
   UpdateItem(){
-    const updateItemDto=this.updateItem.getRawValue()
+    const updateItemDto=this.updateItemForm.getRawValue()
     this.itemService.UpdateItemById(updateItemDto).subscribe({
       next:()=>{
         this.location.back()
